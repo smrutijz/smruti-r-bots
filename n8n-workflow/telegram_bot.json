@@ -52,7 +52,7 @@
       "name": "CheckCommand",
       "type": "n8n-nodes-base.switch",
       "position": [
-        -240,
+        -20,
         580
       ],
       "typeVersion": 1
@@ -67,8 +67,8 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        480,
-        920
+        720,
+        940
       ],
       "typeVersion": 1
     },
@@ -102,7 +102,7 @@
       "name": "Settings",
       "type": "n8n-nodes-base.set",
       "position": [
-        -840,
+        -620,
         580
       ],
       "typeVersion": 2
@@ -117,8 +117,8 @@
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -20,
-        -300
+        220,
+        -280
       ],
       "typeVersion": 1
     },
@@ -132,8 +132,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        260
+        240,
+        280
       ],
       "typeVersion": 1
     },
@@ -161,7 +161,7 @@
       "name": "Greeting",
       "type": "n8n-nodes-base.openAi",
       "position": [
-        120,
+        340,
         340
       ],
       "typeVersion": 1,
@@ -174,7 +174,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Settings').first().json.message.from.id }}",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
         "text": "={{ $json.output }}",
         "additionalFields": {
           "parse_mode": "Markdown"
@@ -184,7 +184,7 @@
       "name": "Text reply",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        620,
+        840,
         -200
       ],
       "typeVersion": 1,
@@ -199,14 +199,14 @@
     {
       "parameters": {
         "operation": "sendChatAction",
-        "chatId": "={{ $json.message.from.id }}",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
         "action": "={{ $json.bot_typing }}"
       },
       "id": "3fdd6655-fc12-44b2-b397-9cd839f9b9ba",
       "name": "Send Typing action",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -620,
+        -400,
         720
       ],
       "typeVersion": 1,
@@ -226,7 +226,7 @@
       "name": "Merge",
       "type": "n8n-nodes-base.merge",
       "position": [
-        -420,
+        -200,
         600
       ],
       "typeVersion": 2.1
@@ -241,15 +241,15 @@
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        540
+        240,
+        560
       ],
       "typeVersion": 1
     },
     {
       "parameters": {
-        "chatId": "={{ $json.message.from.id }}",
-        "text": "=Sorry, {{ $json.message.from.first_name }}! This command is not supported yet.",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
+        "text": "=Sorry, {{ $('Telegram Trigger').first().json.message.from.first_name }}! This command is not supported yet.",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -258,7 +258,7 @@
       "name": "Send error message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        580,
+        800,
         1020
       ],
       "typeVersion": 1,
@@ -276,7 +276,7 @@
           "string": [
             {
               "name": "message.text",
-              "value": "={{ $json?.message?.text || \"\" }}"
+              "value": "={{ $('Telegram Trigger').first().json.message.text || \"\" }}"
             }
           ]
         },
@@ -288,48 +288,15 @@
       "name": "PreProcessing",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1040,
+        -820,
         580
       ],
       "typeVersion": 2
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "aa62649c-6a17-4164-a527-77f13fafd82e",
-              "leftValue": "={{ $json.message.message_id }}",
-              "rightValue": 300,
-              "operator": {
-                "type": "number",
-                "operation": "lte"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -1320,
-        600
-      ],
-      "id": "e2573528-9707-4266-b268-fe3a77088f8d",
-      "name": "OAuth"
-    },
-    {
-      "parameters": {
-        "chatId": "={{ $json.message.from.id }}",
-        "text": "=🚫 You've hit the limit for free queries.\n👉 Sign in to unlock more access and continue the conversation!",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
+        "text": "=Sorry, {{ $('Telegram Trigger').first().json.message.from.first_name }}!\n🚫 You've hit the limit for free queries.\n👉 Sign in to unlock more access and continue the conversation!",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -338,8 +305,8 @@
       "name": "Send OAuth message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -1140,
-        880
+        -940,
+        1460
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -360,8 +327,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1240,
-        800
+        -980,
+        1380
       ],
       "typeVersion": 1
     },
@@ -376,7 +343,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        40,
+        260,
         -200
       ],
       "id": "8ecb4cfc-1d4d-4081-b5a8-bb22c9f11169",
@@ -406,7 +373,7 @@
       "name": "Greeting1",
       "type": "n8n-nodes-base.openAi",
       "position": [
-        140,
+        360,
         620
       ],
       "typeVersion": 1,
@@ -419,7 +386,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Settings').first().json.message.from.id }}",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
         "text": "={{ $json.message.content }}",
         "additionalFields": {
           "parse_mode": "Markdown"
@@ -429,7 +396,7 @@
       "name": "Send error message1",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        560,
+        780,
         620
       ],
       "typeVersion": 1,
@@ -443,7 +410,7 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $('Settings').first().json.message.from.id }}",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
         "text": "={{ $json.message.content }}",
         "additionalFields": {
           "parse_mode": "Markdown"
@@ -453,7 +420,7 @@
       "name": "Send error message2",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        580,
+        800,
         340
       ],
       "typeVersion": 1,
@@ -468,14 +435,14 @@
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "={{ $json.message.from.id }}",
+        "sessionKey": "={{ $('Telegram Trigger').first().json.message.from.id }}",
         "tableName": "smrutirbot_chat_histories",
         "contextWindowLength": 10
       },
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        100,
+        320,
         -40
       ],
       "id": "36fe3e4b-bc27-4b93-8bd5-3b59a768a221",
@@ -500,7 +467,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        0,
+        220,
         -40
       ],
       "id": "adc5a9aa-fe29-450c-9340-462b1cb1ccd2",
@@ -511,6 +478,114 @@
           "name": "OpenAi account"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "aa62649c-6a17-4164-a527-77f13fafd82e",
+              "leftValue": "={{ $json.message.chat.id }}",
+              "rightValue": 7949776784,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -1320,
+        600
+      ],
+      "id": "e2573528-9707-4266-b268-fe3a77088f8d",
+      "name": "Allow Main User"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "smrutirbot_chat_histories",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "session_id",
+              "condition": "eq",
+              "keyValue": "={{ $('Telegram Trigger').first().json.message.from.id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1260,
+        820
+      ],
+      "id": "8d76918b-ab88-462a-b317-223843269060",
+      "name": "Get many rows",
+      "credentials": {
+        "supabaseApi": {
+          "id": "k49vPd5QaRcETNg1",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const aiCount = items.filter(i => i.json.message.type === 'ai').length;\nreturn [{ json: { aiCount } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1260,
+        1060
+      ],
+      "id": "e8549506-4f6a-49e1-beec-fd31376b70aa",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "aa62649c-6a17-4164-a527-77f13fafd82e",
+              "leftValue": "={{ $json.aiCount }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -940,
+        1060
+      ],
+      "id": "12f5553f-50ef-47f7-b49b-d1f7f25b5306",
+      "name": "Allow other User 10 times"
     }
   ],
   "pinData": {},
@@ -600,7 +675,7 @@
       "main": [
         [
           {
-            "node": "OAuth",
+            "node": "Allow Main User",
             "type": "main",
             "index": 0
           }
@@ -614,24 +689,6 @@
             "node": "Merge",
             "type": "main",
             "index": 1
-          }
-        ]
-      ]
-    },
-    "OAuth": {
-      "main": [
-        [
-          {
-            "node": "PreProcessing",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send OAuth message",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -679,13 +736,71 @@
           }
         ]
       ]
+    },
+    "Allow Main User": {
+      "main": [
+        [
+          {
+            "node": "PreProcessing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get many rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many rows": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Allow other User 10 times",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Allow other User 10 times": {
+      "main": [
+        [
+          {
+            "node": "PreProcessing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send OAuth message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "cc5c47d6-76d3-4d2e-a0ea-0dec87cf71ee",
+  "versionId": "d621cf44-2824-4cff-88ec-5033ea5febf9",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "17e5e1ddd4d65a463114d733b32277d70b4ca51cf2c0ae2385656b77bbe97fc4"
