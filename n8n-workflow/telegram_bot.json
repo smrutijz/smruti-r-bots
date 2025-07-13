@@ -77,15 +77,16 @@
     {
       "parameters": {
         "content": "## Chatbot mode by default\n### (when no command is provided)",
-        "height": 393,
-        "width": 411
+        "height": 813,
+        "width": 931,
+        "color": 4
       },
       "id": "a51611fb-0bb3-4f6f-a534-45bf5782f0d2",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        0,
-        0
+        -400,
+        -400
       ],
       "typeVersion": 1
     },
@@ -117,7 +118,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         640,
-        80
+        -300
       ],
       "typeVersion": 1,
       "webhookId": "370944f5-9d22-4c16-aba4-aab81c46c95b",
@@ -275,8 +276,8 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        60,
-        80
+        -260,
+        -300
       ],
       "id": "e04a588d-0d25-4bdf-a594-1223e844453a",
       "name": "AI Agent"
@@ -291,8 +292,8 @@
       "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
       "typeVersion": 1.3,
       "position": [
-        120,
-        240
+        -140,
+        -40
       ],
       "id": "b3603a9c-1ab0-44a9-83e0-e3e3277c4bdd",
       "name": "Chat Memory",
@@ -316,8 +317,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        20,
-        240
+        -260,
+        -40
       ],
       "id": "4a39c846-2d3c-4d26-8e03-44e661902fac",
       "name": "LLM",
@@ -402,39 +403,6 @@
       ],
       "id": "9fcfd745-1f6d-4002-a3c9-7afc18d418a0",
       "name": "Code"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "aa62649c-6a17-4164-a527-77f13fafd82e",
-              "leftValue": "={{ $json.aiCount }}",
-              "rightValue": 10,
-              "operator": {
-                "type": "number",
-                "operation": "lte"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -200,
-        640
-      ],
-      "id": "8cc3b9f7-a701-4c61-8545-0e59cc3c2e10",
-      "name": "Allow other User 10 times"
     },
     {
       "parameters": {
@@ -540,13 +508,13 @@
     },
     {
       "parameters": {
-        "description": "Useful for when you need to answer questions about Smruti Ranjan Satpathy. Whenever you need information about Smruti’s professional history, projects, roles, expertise, goals, or related background, you should ALWAYS use this. Input should be a fully‑formed question."
+        "description": "👉 Tool Description (for n8n Vector Store Node):\nUseful when you need to answer questions about Smruti Ranjan Satpathy — also known as Smruti, Sam, or Mr. Satpathy. All these names refer to the same individual. Whenever you need insights into Smruti’s professional history, roles, projects, expertise, goals, or related background, always use this tool. Input must be a fully‑formed question.\n\nWhy this works:\n\n🎯 Clarity: It clearly defines who the aliases map to.\n🧠 Scope: Emphasizes that the tool covers Smruti’s background data.\n✅ Consistency: Instructs always to rely on the vector store for relevant Smruti queries.\n📝 Precision: Reminds users to ask in full question format."
       },
       "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
       "typeVersion": 1.1,
       "position": [
-        240,
-        300
+        120,
+        -40
       ],
       "id": "827e2767-8097-4320-8c91-6b187f1a963e",
       "name": "Answer questions with a vector store"
@@ -560,14 +528,22 @@
           "cachedResultName": "documents"
         },
         "options": {
-          "queryName": "match_documents"
+          "queryName": "match_documents",
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "type",
+                "value": "Resume of Smruti (sam) Ranjan Satpathy"
+              }
+            ]
+          }
         }
       },
       "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
       "typeVersion": 1.3,
       "position": [
         40,
-        440
+        100
       ],
       "id": "1d3c2437-f173-4177-b008-45f07e89fb61",
       "name": "Supabase Vector Store",
@@ -586,7 +562,7 @@
       "typeVersion": 1.2,
       "position": [
         40,
-        580
+        260
       ],
       "id": "ced5613e-0c69-4852-99ac-febccad70a08",
       "name": "Embeddings OpenAI",
@@ -610,8 +586,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        360,
-        520
+        380,
+        160
       ],
       "id": "c6c7229c-5427-427e-8d07-ffdab27eb006",
       "name": "OpenAI Chat Model",
@@ -621,6 +597,39 @@
           "name": "OpenAi account"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "aa62649c-6a17-4164-a527-77f13fafd82e",
+              "leftValue": "={{ $json.aiCount }}",
+              "rightValue": 100,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -200,
+        640
+      ],
+      "id": "8cc3b9f7-a701-4c61-8545-0e59cc3c2e10",
+      "name": "Allow other User 100 times"
     }
   ],
   "pinData": {},
@@ -751,25 +760,7 @@
       "main": [
         [
           {
-            "node": "Allow other User 10 times",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Allow other User 10 times": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send OAuth message",
+            "node": "Allow other User 100 times",
             "type": "main",
             "index": 0
           }
@@ -858,13 +849,31 @@
           }
         ]
       ]
+    },
+    "Allow other User 100 times": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send OAuth message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "20b9a8b2-ca45-4acd-97e7-0d1f194920dc",
+  "versionId": "f7925a8f-35b1-4951-8bed-94e48816774a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "95fb932d26ae7c2d431f088c0c09865285282ecfdd23d41a2c5ec403680eda24"
