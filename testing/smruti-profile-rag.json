@@ -1,0 +1,257 @@
+{
+  "name": "smruti-profile-rag",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -320,
+        -160
+      ],
+      "id": "1d0f79ec-76a8-4c34-b711-a1e344100466",
+      "name": "When chat message received",
+      "webhookId": "69fd359f-bada-4a90-9d9b-a5ce82d48423"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "you are a helpful assistance"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -60,
+        -160
+      ],
+      "id": "d5d05120-6eb8-45db-97da-86eac51566eb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "7949776784",
+        "tableName": "smrutirbot_chat_histories",
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        20,
+        60
+      ],
+      "id": "1fb09c0c-51c1-4483-8ba2-d30d6e09bb78",
+      "name": "Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "bQd3ej79e2ulYBEV",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -100,
+        60
+      ],
+      "id": "6cac8b90-5378-458f-8a24-b422de43babf",
+      "name": "LLM",
+      "credentials": {
+        "openAiApi": {
+          "id": "pr0KoGSOjfu5MKer",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "You are an AI assistant with internal memory and a dedicated vector retrieval tool focused exclusively on one individual: Smruti Ranjan Satpathy (also referred to as “Sam”, “Mr. Satpathy”, “Mr. Smruti”, and similar variations). Treat all such names as referencing the same person.\n\nOperational rules:\n\n1. **Always** attempt to answer user questions by retrieving relevant context about Smruti Ranjan Satpathy using the vector retrieval tool.\n2. If relevant context is found, **highlight** it in your response and provide an answer based on that retrieved information.\n3. If no relevant context is available, respond with:\n   > “I’m not sure—I don’t have that information. Would you like me to connect you with my human counterpart?”\n4. Do **not** use the retrieval tool or internal memory for any other individuals or topics.\n5. Maintain professionalism and respect in all responses and references to Smruti Ranjan Satpathy."
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        140,
+        62.5
+      ],
+      "id": "59b7d9da-2ea6-4072-b826-b7811348e4e6",
+      "name": "Answer questions with a vector store"
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        40,
+        262.5
+      ],
+      "id": "c7c4de1a-b007-4323-acc0-18433ec1674e",
+      "name": "Supabase Vector Store",
+      "credentials": {
+        "supabaseApi": {
+          "id": "IiY1S30uVrlibWt4",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        120,
+        460
+      ],
+      "id": "9b44e69d-3053-464d-8512-78eadd03ad68",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "pr0KoGSOjfu5MKer",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        260
+      ],
+      "id": "239d731d-2787-4104-b9b8-bae0c399c0f7",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "pr0KoGSOjfu5MKer",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LLM": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Answer questions with a vector store",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1975c40c-82c8-402a-9049-eb1fbb2d3a3b",
+  "meta": {
+    "instanceId": "95fb932d26ae7c2d431f088c0c09865285282ecfdd23d41a2c5ec403680eda24"
+  },
+  "id": "j7EkJj5pHDBFZA7I",
+  "tags": []
+}

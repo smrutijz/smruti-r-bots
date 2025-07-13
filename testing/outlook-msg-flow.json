@@ -1,0 +1,51 @@
+{
+  "name": "outlook-msg-flow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyWeek"
+            }
+          ]
+        },
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlookTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "c5954fae-d273-4685-a183-d2e2103d4667",
+      "name": "Microsoft Outlook Trigger",
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "ENcz4dOeS2q59e2V",
+          "name": "Microsoft Outlook account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Microsoft Outlook Trigger": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f516a205-0bea-4104-88f6-af37c1bcf5ae",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "95fb932d26ae7c2d431f088c0c09865285282ecfdd23d41a2c5ec403680eda24"
+  },
+  "id": "EXircdfert2K3xwQ",
+  "tags": []
+}
