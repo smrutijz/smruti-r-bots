@@ -1,0 +1,77 @@
+{
+  "name": "smrutirbot_oauth_post_request",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "smrutirbot_oauth_post_request",
+        "authentication": "jwtAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "5350a22b-8731-478e-b32d-07460e73f29c",
+      "name": "Webhook",
+      "webhookId": "dfe9e15c-d9f2-46bd-96e1-66688cbf3261",
+      "credentials": {
+        "jwtAuth": {
+          "id": "kItDknlt7q9YzmWg",
+          "name": "JWT Auth account for SmrutiRBot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.body.tid }}",
+        "text": "=Successfully logged in with email : {{ $json.body.user.email }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "5d8c8487-36f6-4aaf-9436-dfd1a7a37d6e",
+      "name": "Successfully Login Message",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        224,
+        0
+      ],
+      "typeVersion": 1,
+      "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
+      "credentials": {
+        "telegramApi": {
+          "id": "VrUN2BLxI7XzhxlX",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Successfully Login Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b95f62bd-2239-4525-8112-a90ee8b3ff30",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
+  },
+  "id": "gUGV291wszElWOFD",
+  "tags": []
+}
