@@ -11,8 +11,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        0,
-        0
+        -144,
+        16
       ],
       "id": "5350a22b-8731-478e-b32d-07460e73f29c",
       "name": "Webhook",
@@ -26,8 +26,8 @@
     },
     {
       "parameters": {
-        "chatId": "={{ $json.body.tid }}",
-        "text": "=Successfully logged in with email : {{ $json.body.user.email }}",
+        "chatId": "={{ $json.telegram_id }}",
+        "text": "=✅ Successfully logged in with email: {{ $json.user_email }}\n\nDisclaimer:\n🔒 Your email ID is securely stored for future identification purposes only.\n🛡️ No other personal information is retained.",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -36,8 +36,8 @@
       "name": "Successfully Login Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        224,
-        0
+        736,
+        16
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -45,6 +45,133 @@
         "telegramApi": {
           "id": "VrUN2BLxI7XzhxlX",
           "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0a6f29be-aec0-40fd-b873-8852baa8ff8c",
+              "name": "telegram_id",
+              "value": "={{$json.body.tid}}",
+              "type": "string"
+            },
+            {
+              "id": "cc67ce3c-2c93-40c0-8ac6-4d6eff532332",
+              "name": "user_email",
+              "value": "={{$json.body.user.email}}",
+              "type": "string"
+            },
+            {
+              "id": "f3ef26d8-1c9f-4b5b-a6e5-f9ce71abdddb",
+              "name": "user_name",
+              "value": "={{$json.body.user.name}}",
+              "type": "string"
+            },
+            {
+              "id": "c35d6a36-b959-4b6e-be41-4c62f3891926",
+              "name": "token_issued",
+              "value": "={{$json.jwtPayload.iat}}",
+              "type": "string"
+            },
+            {
+              "id": "566bf4cf-ec46-495b-84c5-0b64ac65d98a",
+              "name": "token_exp",
+              "value": "={{$json.body.exp}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        16,
+        16
+      ],
+      "id": "27ecedc7-4313-4488-a3de-b5f2693610af",
+      "name": "Get Fields"
+    },
+    {
+      "parameters": {
+        "tableId": "user_logins",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "telegram_id",
+              "fieldValue": "={{ $json.telegram_id }}"
+            },
+            {
+              "fieldId": "user_email",
+              "fieldValue": "={{ $json.user_email }}"
+            },
+            {
+              "fieldId": "user_name",
+              "fieldValue": "={{ $json.user_name }}"
+            },
+            {
+              "fieldId": "token_exp",
+              "fieldValue": "={{ $json.token_exp }}"
+            },
+            {
+              "fieldId": "created_at",
+              "fieldValue": "={{ $json.token_issued }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        544,
+        16
+      ],
+      "id": "a712a5b8-a5ff-4fe2-aab2-4871378c2ca7",
+      "name": "Create a row",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "IiY1S30uVrlibWt4",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Input JSON example:\n// {\n//   telegram_id: \"7949776784\",\n//   user_email: \"smrutijz@gmail.com\",\n//   user_name: \"Smrutijz Satpathy\",\n//   token_issued: \"1753608042\",\n//   token_exp: \"1753608342\"\n// }\n\nconst issuedEpoch = parseInt($('Get Fields').first().json.token_issued, 10);\nconst expEpoch = parseInt($('Get Fields').first().json.token_exp, 10);\n\n// Convert epoch seconds to ISO 8601 timestamp\nconst issuedISO = new Date(issuedEpoch * 1000).toISOString();\nconst expISO = new Date(expEpoch * 1000).toISOString();\n\nreturn {\n  json: {\n    telegram_id: $('Get Fields').first().json.telegram_id,\n    user_email: $('Get Fields').first().json.user_email,\n    user_name: $('Get Fields').first().json.user_name,\n    token_issued: issuedISO,\n    token_exp: expISO\n  }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        352,
+        16
+      ],
+      "id": "e876222f-b141-4ffe-be79-08f81e9bdee0",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "user_logins",
+        "filterType": "string",
+        "filterString": "=telegram_id=eq.{{ $json[\"telegram_id\"] }}&user_email=eq.{{ $json[\"user_email\"] }}"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        176,
+        16
+      ],
+      "id": "2688b672-cfa3-4682-a4a7-0975e187d6f1",
+      "name": "Delete a row",
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "IiY1S30uVrlibWt4",
+          "name": "Supabase account"
         }
       }
     }
@@ -55,7 +182,51 @@
       "main": [
         [
           {
+            "node": "Get Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Fields": {
+      "main": [
+        [
+          {
+            "node": "Delete a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a row": {
+      "main": [
+        [
+          {
             "node": "Successfully Login Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Create a row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete a row": {
+      "main": [
+        [
+          {
+            "node": "Code",
             "type": "main",
             "index": 0
           }
@@ -67,7 +238,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b95f62bd-2239-4525-8112-a90ee8b3ff30",
+  "versionId": "b40e0479-85e6-40b5-b911-914eaad201af",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
