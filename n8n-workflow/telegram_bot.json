@@ -229,7 +229,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=🚫 Sorry, {{ $('Telegram Trigger').first().json.message.from.first_name }}!\nYou’ve reached your free query limit.\n\n👉 [Login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }}) to unlock more access\n🤝 Need help? I can forward your message to Smruti (Sam) Satpathy",
+        "text": "=🚫 Sorry, {{ $('Telegram Trigger').first().json.message.from.first_name }}!\nYou’ve reached your free query limit.\n\n👉 [Click here to login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }}) to unlock more access\n🤝 Need help? I can forward your message to Smruti (Sam) Satpathy",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -371,7 +371,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=Hello {{ $('Telegram Trigger').first().json.message.from.first_name }}! 😊\n\nI’m SmrutiRBot — here’s what I can help you with:\n\n🔹 Answer questions on a wide range of topics  \n🔹 Share useful tips, guides, and resources  \n🔹 Assist with scheduling, reminders, and follow‑ups  \n🔹 Connect you to Smruti (Sam) Satpathy when needed  \n🔹 Provide the standard menu options anytime  \n\nJust let me know what you’d like to do next! 👇",
+        "text": "=I’m SmrutiRBot — here’s how I can assist you:\n\n🤖 Ask me anything — I handle a wide range of questions.\n📚 Get tips and guides — on scheduling, reminders, resources.\n🔗 Connect to Smruti (Sam) Satpathy when you need human support.\n📋 Use the menu anytime for options at your fingertips.\n\nWhat would you like to do next? 👇",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -395,7 +395,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=Thank you, {{ $('Telegram Trigger').first().json.message.from.first_name }}!  \nIt’s been a pleasure assisting you. If you have more questions, feel free to reach out anytime.  \nHave a wonderful day! 🌟\n",
+        "text": "=🙏 Thank you, {{ $('Telegram Trigger').first().json.message.from.first_name }}!  \nIt’s been a pleasure assisting you. If you have more questions, feel free to reach out anytime.\n",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -570,40 +570,7 @@
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "aa62649c-6a17-4164-a527-77f13fafd82e",
-              "leftValue": "={{ $json.aiCount }}",
-              "rightValue": 10,
-              "operator": {
-                "type": "number",
-                "operation": "lte"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        144,
-        -32
-      ],
-      "id": "8cc3b9f7-a701-4c61-8545-0e59cc3c2e10",
-      "name": "Allow other User 10 times"
-    },
-    {
-      "parameters": {
-        "jsCode": "const aiCount = items.filter(i => i.json.message.type === 'ai').length;\nreturn [{ json: { aiCount } }];"
+        "jsCode": "// Count how many items have message.type === 'ai'\nconst aiCount = items.filter(\n  i => i.json?.message?.type === 'ai'\n).length;\n\n// Return the count in the output\nreturn [\n  {\n    json: {\n      aiCount,\n    },\n  },\n];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -619,7 +586,7 @@
         "operation": "getAll",
         "tableId": "user_logins",
         "filterType": "string",
-        "filterString": "=token_exp=lt.{{ new Date().toISOString() }}&telegram_id=eq.{{ $('Telegram Trigger').first().json.message.from.id }}"
+        "filterString": "=token_exp=gt.{{ new Date().toISOString() }}&telegram_id=eq.{{ $('Telegram Trigger').first().json.message.from.id }}"
       },
       "type": "n8n-nodes-base.supabase",
       "typeVersion": 1,
@@ -717,7 +684,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=👉 Click to [Login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }})",
+        "text": "=👉 [Click here to login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }})",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -741,7 +708,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=✅ You’re already logged in!\n🔄 Wanna log in again?\n👉 Click to [Login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }})",
+        "text": "=✅ You’re already logged in!\n🔄 Wanna log in again?\n👉 [Click here to login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }})",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -808,6 +775,39 @@
       ],
       "id": "757f2eeb-f738-41cb-8291-fab794fae6e0",
       "name": "Has Auth Check Code 1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "aa62649c-6a17-4164-a527-77f13fafd82e",
+              "leftValue": "={{ $json.aiCount }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        -32
+      ],
+      "id": "8cc3b9f7-a701-4c61-8545-0e59cc3c2e10",
+      "name": "Allow UnAuth User 10 times"
     }
   ],
   "pinData": {},
@@ -1006,29 +1006,11 @@
         ]
       ]
     },
-    "Allow other User 10 times": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send OAuth message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Num Execution Check Code": {
       "main": [
         [
           {
-            "node": "Allow other User 10 times",
+            "node": "Allow UnAuth User 10 times",
             "type": "main",
             "index": 0
           }
@@ -1114,13 +1096,31 @@
           }
         ]
       ]
+    },
+    "Allow UnAuth User 10 times": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send OAuth message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "9d41ab2e-ec00-46fc-a6e6-fc90c7245b6c",
+  "versionId": "29662656-392f-4e91-8c60-a4ce74c1ddb8",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
