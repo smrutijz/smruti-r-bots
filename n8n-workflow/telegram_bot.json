@@ -86,7 +86,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         384,
-        -432
+        -416
       ],
       "typeVersion": 1
     },
@@ -229,7 +229,36 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=🚫 Sorry, {{ $('Telegram Trigger').first().json.message.from.first_name }}!\nYou’ve reached your free query limit.\n\n👉 [Click here to login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }}) to unlock more access\n🤝 Need help? I can forward your message to Smruti (Sam) Satpathy",
+        "text": "=🚫 Sorry, {{ $('Telegram Trigger').first().json.message.from.first_name }}!\nYou’ve reached your free query limit.",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "👉 Click here to login",
+                    "additionalFields": {
+                      "url": "=https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }}"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "👉 Contact Smruti (Sam) Satpathy",
+                    "additionalFields": {
+                      "url": "https://t.me/Smrutijz"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -308,9 +337,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-3.5-turbo",
+          "value": "gpt-4o-mini",
           "mode": "list",
-          "cachedResultName": "gpt-3.5-turbo"
+          "cachedResultName": "gpt-4o-mini"
         },
         "options": {}
       },
@@ -340,7 +369,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -624,
-        752
+        736
       ],
       "typeVersion": 1
     },
@@ -356,8 +385,8 @@
       "name": "Welcome Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -496,
-        288
+        -512,
+        272
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -380,7 +409,7 @@
       "name": "Info Message",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        -496,
+        -512,
         800
       ],
       "typeVersion": 1,
@@ -405,7 +434,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         -496,
-        544
+        528
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -534,7 +563,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -624,
-        1040
+        1008
       ],
       "typeVersion": 1
     },
@@ -684,7 +713,24 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=👉 [Click here to login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }})",
+        "text": "=🔐 You’re about to log in.",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "👉 Click here to login",
+                    "additionalFields": {
+                      "url": "=https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -694,7 +740,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         -496,
-        1088
+        1056
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -708,7 +754,24 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "=✅ You’re already logged in!\n🔄 Wanna log in again?\n👉 [Click here to login](https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }})",
+        "text": "=✅ You’re already logged in!\n🔄 Wanna log in again?",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "👉 Click here to login",
+                    "additionalFields": {
+                      "url": "=https://wap-apac-oauth-oidc-flask-app-erebgyhba6bvhwak.southeastasia-01.azurewebsites.net/trigger?tid={{ $('Telegram Trigger').first().json.message.from.id }}"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -718,7 +781,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         -496,
-        1248
+        1216
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -792,7 +855,7 @@
               "rightValue": 10,
               "operator": {
                 "type": "number",
-                "operation": "lte"
+                "operation": "lt"
               }
             }
           ],
@@ -1120,7 +1183,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "29662656-392f-4e91-8c60-a4ce74c1ddb8",
+  "versionId": "09d0b743-c5a0-4af4-ab6f-0990926888dd",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
