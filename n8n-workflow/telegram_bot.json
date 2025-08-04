@@ -337,9 +337,9 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4o-mini",
+          "value": "gpt-3.5-turbo-16k",
           "mode": "list",
-          "cachedResultName": "gpt-4o-mini"
+          "cachedResultName": "gpt-3.5-turbo-16k"
         },
         "options": {}
       },
@@ -410,7 +410,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         -512,
-        800
+        832
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -448,8 +448,8 @@
     {
       "parameters": {
         "mode": "expression",
-        "numberOutputs": 6,
-        "output": "={{ \n  $json.message?.text && !$json.message.text.startsWith('/') ? 0\n    : $json.message.text === '/start' ? 1\n    : $json.message.text === '/end' ? 2\n  : $json.message.text === '/info' ? 3\n  : $json.message.text === '/login' ? 4\n  : $json.message.text.startsWith('/') ? 5\n  : 0\n}}"
+        "numberOutputs": 7,
+        "output": "={{ \n  $json.message?.text && !$json.message.text.startsWith('/') ? 0\n    : $json.message.text === '/start' ? 1\n    : $json.message.text === '/end' ? 2\n  : $json.message.text === '/info' ? 3\n  : $json.message.text === '/login' ? 4\n  : $json.message.text === '/talk2smruti' ? 5\n  : $json.message.text.startsWith('/') ? 6\n  : 0\n}}"
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
@@ -462,7 +462,7 @@
     },
     {
       "parameters": {
-        "description": "👉 Tool Description (for n8n Vector Store Node):\nUseful when you need to answer questions about Smruti Ranjan Satpathy — also known as Smruti, Sam, or Mr. Satpathy. All these names refer to the same individual. Whenever you need insights into Smruti’s professional history, roles, projects, expertise, goals, or related background, always use this tool. Input must be a fully‑formed question.\n\nWhy this works:\n\n🎯 Clarity: It clearly defines who the aliases map to.\n🧠 Scope: Emphasizes that the tool covers Smruti’s background data.\n✅ Consistency: Instructs always to rely on the vector store for relevant Smruti queries.\n📝 Precision: Reminds users to ask in full question format."
+        "description": "👉 Tool Description (for n8n Vector Store Node):\nUseful when you need to answer questions about Smruti Ranjan Satpathy — also known as Smruti, Sam, or Mr. Satpathy. All these names refer to the same individual. Whenever you need insights into Smruti’s professional history, roles, projects, expertise, goals, or related background, always use this tool."
       },
       "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
       "typeVersion": 1.1,
@@ -563,7 +563,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "position": [
         -624,
-        1008
+        1280
       ],
       "typeVersion": 1
     },
@@ -621,7 +621,7 @@
       "typeVersion": 1,
       "position": [
         -1040,
-        800
+        1072
       ],
       "id": "2c7e6a63-239e-40b9-9bbd-0f2527087fd5",
       "name": "Get Auth User 2",
@@ -671,7 +671,7 @@
       "typeVersion": 2,
       "position": [
         -896,
-        944
+        1216
       ],
       "id": "621f633d-dcfc-4076-b894-e98702615fa0",
       "name": "Has Auth Check Code 2"
@@ -705,7 +705,7 @@
       "typeVersion": 2.2,
       "position": [
         -752,
-        1104
+        1376
       ],
       "id": "5a93fe19-0a03-4be4-95e6-8778e6db2e2f",
       "name": "Allow Auth User 2"
@@ -740,7 +740,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         -496,
-        1056
+        1328
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -781,7 +781,7 @@
       "type": "n8n-nodes-base.telegram",
       "position": [
         -496,
-        1216
+        1488
       ],
       "typeVersion": 1,
       "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
@@ -871,6 +871,106 @@
       ],
       "id": "8cc3b9f7-a701-4c61-8545-0e59cc3c2e10",
       "name": "Allow UnAuth User 10 times"
+    },
+    {
+      "parameters": {
+        "content": "## connect Smruti\n### /connect-me",
+        "height": 233.8785714285713,
+        "width": 329.7428571428562
+      },
+      "id": "e3f8ad45-9075-41d1-ab63-32203e81eafa",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -624,
+        1008
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
+        "text": "=💬 Want to talk to a human?",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "👉 Chat with Smruti (Sam) Satpathy",
+                    "additionalFields": {
+                      "url": "https://t.me/Smrutijz"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "d5e2437a-243b-43cc-9b0f-75354299c9e4",
+      "name": "Info Message1",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        -512,
+        1104
+      ],
+      "typeVersion": 1,
+      "webhookId": "b3d9e569-30d7-44b6-9242-60ac09fc94e5",
+      "credentials": {
+        "telegramApi": {
+          "id": "VrUN2BLxI7XzhxlX",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "When to use this tool (chat_human_support):\n– If you don’t know the information or can’t locate relevant data about the user’s request\n– Or if the user asks sensitive or personal questions you’re not allowed to answer\n→ then call the “chat_human_support” tool instead of providing an uncertain or blank response.",
+        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Text', ``, 'string') }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "👉 Contact Smruti (Sam) Satpathy",
+                    "additionalFields": {
+                      "url": "https://t.me/Smrutijz"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        704,
+        -80
+      ],
+      "id": "cb5c0a5f-26af-48b2-9dfa-0deacd81f3ef",
+      "name": "chat_human_support",
+      "webhookId": "3b836780-d313-4a14-b6b2-e4732910649e",
+      "notesInFlow": false,
+      "credentials": {
+        "telegramApi": {
+          "id": "VrUN2BLxI7XzhxlX",
+          "name": "Telegram account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -1001,6 +1101,13 @@
         [
           {
             "node": "Get Auth User 2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Info Message1",
             "type": "main",
             "index": 0
           }
@@ -1177,13 +1284,24 @@
           }
         ]
       ]
+    },
+    "chat_human_support": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "09d0b743-c5a0-4af4-ab6f-0990926888dd",
+  "versionId": "ae93c18f-f055-44c4-b0fe-c7f5b7c85c4b",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
