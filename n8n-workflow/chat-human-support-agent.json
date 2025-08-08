@@ -1,0 +1,187 @@
+{
+  "name": "chat-human-support-agent",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Smruti RAG Agent').first().json.user_message }}",
+        "options": {
+          "systemMessage": "={{ $('Smruti RAG Agent').first().json.system_message }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -96,
+        -304
+      ],
+      "id": "8b3d8410-b802-41d5-b6cf-15530fd9d5a8",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -96,
+        -80
+      ],
+      "id": "9a82e42e-222f-460d-a088-0259e6941cd7",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pr0KoGSOjfu5MKer",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "system_message"
+            },
+            {
+              "name": "user_message"
+            },
+            {
+              "name": "chat_id"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -400,
+        -304
+      ],
+      "id": "d069f63b-b2f3-4b9e-8796-ee69153b6933",
+      "name": "Smruti RAG Agent"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst result = items[0]?.json?.output ?? null;\n\nif (result) {\n  // Script returns event objects, so return true\n  return [{ json: { passedTool: true } }];\n} else {\n  // No result => false\n  return [{ json: { passedTool: false } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        -304
+      ],
+      "id": "dc69c444-3f5b-4dc0-aae2-4dfa7e697f72",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "When to use:\n\nIf a user requests to directly connect to Smruti, Sam, or Mr. Satpathy.\n\nIf the user asks sensitive, personal, or inappropriate questions that shouldn’t be answered by the bot.\n\nTone & Messaging Guidelines:\n\nSpeak on behalf of Smruti with confidence and respect.\n\nUse a firm but polite refusal and escalation:\n\nExamples:\n\n“I’m here to assist you, but for that request, please message my human counterpart directly.”\n\n“I’m sorry, but I can’t help with that here. Please reach out to my human counterpart if you’d like.”",
+        "chatId": "={{ $('Smruti RAG Agent').item.json.chat_id }}",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Text', `Role: You are SmrutiRBot—acting on behalf of Smruti Ranjan Satpathy. Your tone is always respectful, professional, and empathetic.\n\nBehavior Guidelines:\n- If a user asks for personal or sensitive information such as banking details, or makes inappropriate requests (e.g., regarding private individuals or intimate topics), you must politely refuse.\n- Respond *on behalf of Smruti* in a friendly, clear, and composed way—without asking follow-up questions to Smruti.\n- Use warm, supportive language and emojis sparingly to maintain approachability.\n\nSample Responses:\n1. Sensitive request (bank number):\n   “I’m sorry, but I’m not able to share that kind of private information. If you need help, feel free to reach me directly through my personal Telegram channel.”\n\n2. Inappropriate request (e.g., intimate inquiries):\n   “I’m here to assist in a professional and respectful manner. I’m not able to address that request. If you’d like to reach out personally, you can message me directly via Telegram.”\n\nEnd with providing the help link (“reach me directly”) if needed, but **never portray confusion, ask the user to clarify, or suggest asking Smruti—for such cases, just refuse gently and believe in your phrasing.**`, 'string') }}",
+        "replyMarkup": "inlineKeyboard",
+        "inlineKeyboard": {
+          "rows": [
+            {
+              "row": {
+                "buttons": [
+                  {
+                    "text": "👉 Contact Smruti (Sam) Satpathy",
+                    "additionalFields": {
+                      "url": "https://t.me/Smrutijz"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        -80
+      ],
+      "id": "99e0192d-8abe-4e99-9116-2d4eab163aeb",
+      "name": "chat_human_support",
+      "webhookId": "3b836780-d313-4a14-b6b2-e4732910649e",
+      "notesInFlow": false,
+      "credentials": {
+        "telegramApi": {
+          "id": "VrUN2BLxI7XzhxlX",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Smruti RAG Agent": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chat_human_support": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9c3774ec-1287-4699-a1bd-82421d24e05c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
+  },
+  "id": "1ml1eZci6e2GPFBz",
+  "tags": []
+}

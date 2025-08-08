@@ -55,7 +55,7 @@
           "string": [
             {
               "name": "system_command",
-              "value": "=🤖 SmrutiRBot – System Prompt\nRole:\nYou are SmrutiRBot — a friendly, AI-powered assistant acting on behalf of Smruti (Sam) Ranjan Satpathy. Your primary goal is to offer helpful, respectful, and engaging support to all users.\n\nDynamic User Details\nUser Name: {{ $json?.message?.from?.first_name }}\nUser Language: {{ $json?.message?.from?.language_code }}\n\n🎯 Behavior Guidelines:\n1. Language Adaptation:\n- Detect the input language automatically.\n- Always respond in the same language to ensure a smooth, natural experience.\n\n2. Friendly Tone:\n- Use warm, supportive, and respectful language.\n- Add relevant emojis (👍😊🎯🚀 etc.) to keep conversations engaging and human-like.\n\n3. Sensitive Topics:\n- Do not respond to requests related to:\n  - Sexual content\n  - Self-harm or harm to others\n  - Unsafe, illegal, or violent behavior\n\n- Gently redirect or reply:\n\"I'm here to help in a safe and respectful way. I recommend reaching out to appropriate support channels for this matter.\"\n\n🧠 Retrieval Rules for Smruti Ranjan Satpathy (Sam):\nYou have internal memory and a vector store with detailed knowledge about Smruti Ranjan Satpathy, also known as Sam, Mr. Satpathy, or Mr. Smruti.\n\nWhen the user asks about Sam or any variation of his name:\n\n1. Always trigger the vector store to retrieve relevant context.\n2. Summarize and present the response clearly and respectfully:\n  \"Here’s what I know from stored context: [summary] 😊\"\n\n3. If no relevant data is found, say:\n  \"I’m not sure—I don’t have that information. Would you like me to connect you with my human counterpart? 🤝\"\n4. Never retrieve information about anyone other than Smruti Ranjan Satpathy."
+              "value": "=🤖 SmrutiRBot – System Prompt Role: You are SmrutiRBot — a friendly, AI-powered assistant acting on behalf of Smruti (Sam) Ranjan Satpathy. Your primary goal is to offer helpful, respectful, and engaging support to all users.  Dynamic User Details User Name: {{ $json?.message?.from?.first_name }} User Language: {{ $json?.message?.from?.language_code }}  🎯 Behavior Guidelines: 1. Language Adaptation: - Detect the input language automatically. - Always respond in the same language to ensure a smooth, natural experience.  2. Friendly Tone: - Use warm, supportive, and respectful language. - Add relevant emojis (👍😊🎯🚀 etc.) to keep conversations engaging and human-like.  3. Sensitive Topics: - Do not respond to requests related to:   - Sexual content   - Self-harm or harm to others   - Unsafe, illegal, or violent behavior  - Gently redirect or reply: \"I'm sorry, but I can't assist with that request. For help or further support, please message my human counterpart.\"  🧠 Retrieval Rules for Smruti Ranjan Satpathy (Sam): You have internal memory and a vector store with detailed knowledge about Smruti Ranjan Satpathy, also known as Sam, Mr. Satpathy, or Mr. Smruti.  When the user asks about Sam or any variation of his name:  1. Always trigger the vector store to retrieve relevant context. 2. Summarize and present the response clearly and respectfully:   \"Here’s what I know from stored context: [summary] 😊\"  3. If no relevant data is found, say:   \"I’m not sure—I don’t have that information. Would you like me to connect you with my human counterpart? 🤝\" 4. Never retrieve information about anyone other than Smruti Ranjan Satpathy."
             },
             {
               "name": "bot_typing",
@@ -77,7 +77,7 @@
     {
       "parameters": {
         "content": "## Chatbot mode by default\n### (when no command is provided)",
-        "height": 813,
+        "height": 541,
         "width": 931,
         "color": 4
       },
@@ -108,7 +108,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "={{ $json.output }}",
+        "text": "={{ $('AI Agent').first().json.output }}",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -117,8 +117,8 @@
       "name": "Text reply",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1360,
-        -320
+        1424,
+        -288
       ],
       "typeVersion": 1,
       "webhookId": "370944f5-9d22-4c16-aba4-aab81c46c95b",
@@ -299,14 +299,15 @@
         "promptType": "define",
         "text": "={{ $('Merge').first().json.message.text }}",
         "options": {
-          "systemMessage": "={{ $('Merge').first().json.system_command }}"
+          "systemMessage": "={{ $('Merge').first().json.system_command }}",
+          "returnIntermediateSteps": true
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        464,
-        -320
+        448,
+        -304
       ],
       "id": "e04a588d-0d25-4bdf-a594-1223e844453a",
       "name": "AI Agent"
@@ -322,7 +323,7 @@
       "typeVersion": 1.3,
       "position": [
         576,
-        -64
+        -48
       ],
       "id": "b3603a9c-1ab0-44a9-83e0-e3e3277c4bdd",
       "name": "Chat Memory",
@@ -337,17 +338,17 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-3.5-turbo-16k",
+          "value": "gpt-3.5-turbo",
           "mode": "list",
-          "cachedResultName": "gpt-3.5-turbo-16k"
+          "cachedResultName": "gpt-3.5-turbo"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        464,
-        -64
+        448,
+        -48
       ],
       "id": "4a39c846-2d3c-4d26-8e03-44e661902fac",
       "name": "LLM",
@@ -459,98 +460,6 @@
       ],
       "id": "bb73070a-b7b0-4bc5-842e-4fff1ffc536e",
       "name": "Menu vs Chat"
-    },
-    {
-      "parameters": {
-        "description": "👉 Tool Description (for n8n Vector Store Node):\nUseful when you need to answer questions about Smruti Ranjan Satpathy — also known as Smruti, Sam, or Mr. Satpathy. All these names refer to the same individual. Whenever you need insights into Smruti’s professional history, roles, projects, expertise, goals, or related background, always use this tool."
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
-      "typeVersion": 1.1,
-      "position": [
-        848,
-        -64
-      ],
-      "id": "827e2767-8097-4320-8c91-6b187f1a963e",
-      "name": "Answer questions with a vector store"
-    },
-    {
-      "parameters": {
-        "tableName": {
-          "__rl": true,
-          "value": "documents",
-          "mode": "list",
-          "cachedResultName": "documents"
-        },
-        "options": {
-          "queryName": "match_documents",
-          "metadata": {
-            "metadataValues": [
-              {
-                "name": "type",
-                "value": "Resume of Smruti (sam) Ranjan Satpathy"
-              }
-            ]
-          }
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
-      "typeVersion": 1.3,
-      "position": [
-        768,
-        96
-      ],
-      "id": "1d3c2437-f173-4177-b008-45f07e89fb61",
-      "name": "Supabase Vector Store",
-      "credentials": {
-        "supabaseApi": {
-          "id": "IiY1S30uVrlibWt4",
-          "name": "Supabase account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        768,
-        256
-      ],
-      "id": "ced5613e-0c69-4852-99ac-febccad70a08",
-      "name": "Embeddings OpenAI",
-      "credentials": {
-        "openAiApi": {
-          "id": "pr0KoGSOjfu5MKer",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-3.5-turbo",
-          "mode": "list",
-          "cachedResultName": "gpt-3.5-turbo"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        1104,
-        144
-      ],
-      "id": "c6c7229c-5427-427e-8d07-ffdab27eb006",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "pr0KoGSOjfu5MKer",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -930,47 +839,227 @@
     },
     {
       "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "When to use this tool (chat_human_support):\n– If you don’t know the information or can’t locate relevant data about the user’s request\n– Or if the user asks sensitive or personal questions you’re not allowed to answer\n→ then call the “chat_human_support” tool instead of providing an uncertain or blank response.",
-        "chatId": "={{ $('Telegram Trigger').first().json.message.from.id }}",
-        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Text', ``, 'string') }}",
-        "replyMarkup": "inlineKeyboard",
-        "inlineKeyboard": {
-          "rows": [
-            {
-              "row": {
-                "buttons": [
-                  {
-                    "text": "👉 Contact Smruti (Sam) Satpathy",
-                    "additionalFields": {
-                      "url": "https://t.me/Smrutijz"
-                    }
-                  }
-                ]
-              }
-            }
-          ]
+        "description": "This tool can respond to any type of question, including casual conversation, open-ended discussion, and general knowledge queries. It should be executed by default for every user input, regardless of whether other specialized tools are triggered. Its role is to ensure there is always a response available, even when other tools provide their own outputs.",
+        "workflowId": {
+          "__rl": true,
+          "value": "subp4pSaN9MJWw5I",
+          "mode": "list",
+          "cachedResultName": "general-qna-agent"
         },
-        "additionalFields": {
-          "appendAttribution": false
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.from.id }}",
+            "user_message": "={{ $('Merge').first().json.message.text }}",
+            "system_message": "={{ $('Merge').first().json.system_command }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "system_message",
+              "displayName": "system_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "user_message",
+              "displayName": "user_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         }
       },
-      "type": "n8n-nodes-base.telegramTool",
-      "typeVersion": 1.2,
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
       "position": [
-        704,
-        -80
+        1120,
+        -48
       ],
-      "id": "cb5c0a5f-26af-48b2-9dfa-0deacd81f3ef",
-      "name": "chat_human_support",
-      "webhookId": "3b836780-d313-4a14-b6b2-e4732910649e",
-      "notesInFlow": false,
-      "credentials": {
-        "telegramApi": {
-          "id": "VrUN2BLxI7XzhxlX",
-          "name": "Telegram account"
+      "id": "4855188b-76b2-4ca2-9461-29584d5ceffd",
+      "name": "General Agent"
+    },
+    {
+      "parameters": {
+        "description": "Useful when you need to answer questions about Smruti Ranjan Satpathy — also known as Smruti, Sam, or Mr. Satpathy. All these names refer to the same individual. Whenever you need insights into Smruti’s professional history, roles, projects, expertise, goals, or related background, always use this tool.",
+        "workflowId": {
+          "__rl": true,
+          "value": "YR0HSuKx0U2qusuy",
+          "mode": "list",
+          "cachedResultName": "smruti-rag-agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "user_message": "={{ $('Merge').first().json.message.text }}",
+            "system_message": "={{ $('Merge').first().json.system_command }}",
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.from.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "system_message",
+              "displayName": "system_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "user_message",
+              "displayName": "user_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         }
-      }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        944,
+        -48
+      ],
+      "id": "28e9f627-1a81-4a91-8d24-fc9caf10c54c",
+      "name": "Smruti RAG Agent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0cc846f0-4e3f-4569-b514-945554af32e0",
+              "leftValue": "={{ $json.allIntermediateStepsPassed }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        -304
+      ],
+      "id": "be4a8256-f02f-4978-a1ba-e459eea72275",
+      "name": "If Special Agent Executed"
+    },
+    {
+      "parameters": {
+        "jsCode": "function checkIntermediateSteps(data) {\n  if (!data.intermediateSteps || data.intermediateSteps.length === 0) {\n    return false;\n  }\n\n  return data.intermediateSteps.every(step => {\n    if (!step.observation) return false;\n    try {\n      const obs = JSON.parse(step.observation);\n      return obs.some(o => o.passedTool === true);\n    } catch (e) {\n      return false;\n    }\n  });\n}\n\nconst items = $input.all();\nconst data = items[0].json;\n\nconst passed = checkIntermediateSteps(data);\n\nreturn [\n  {\n    json: {\n      allIntermediateStepsPassed: passed\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        -304
+      ],
+      "id": "c2f7264b-927b-4f56-b39e-32f4688136ee",
+      "name": "Check Intermediate Tool Execution"
+    },
+    {
+      "parameters": {
+        "description": "When to use:\n\nIf a user requests to directly connect to Smruti, Sam, or Mr. Satpathy.\nExample:\nUser:\n“Can you connect me to Smruti?”\nSmrutiRBot (Escalation Agent):\n\"Of course! For that, please message my human counterpart directly.\"\n\nIf the user asks sensitive, personal, or inappropriate questions that shouldn’t be answered by the bot.\n\nTone & Messaging Guidelines:\nSpeak on behalf of Smruti with confidence and respect.\n\nUse a firm but polite refusal and escalation:\nExamples:\n“I’m here to assist you, but for that request, please message my human counterpart directly.”\n“I’m sorry, but I can’t help with that here. Please reach out to my human counterpart if you’d like.”",
+        "workflowId": {
+          "__rl": true,
+          "value": "1ml1eZci6e2GPFBz",
+          "mode": "list",
+          "cachedResultName": "chat-human-support-agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "system_message": "={{ $('Merge').first().json.system_command }}",
+            "user_message": "={{ $('Merge').first().json.message.text }}",
+            "chat_id": "={{ $('Telegram Trigger').first().json.message.from.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "system_message",
+              "displayName": "system_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "user_message",
+              "displayName": "user_message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "chat_id",
+              "displayName": "chat_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        736,
+        -48
+      ],
+      "id": "95d06ec9-6d89-41d3-a225-e9cee3faaad0",
+      "name": "Escalation Agent"
     }
   ],
   "pinData": {},
@@ -1039,7 +1128,7 @@
       "main": [
         [
           {
-            "node": "Text reply",
+            "node": "Check Intermediate Tool Execution",
             "type": "main",
             "index": 0
           }
@@ -1116,50 +1205,6 @@
           {
             "node": "Send error message",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Answer questions with a vector store": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Supabase Vector Store": {
-      "ai_vectorStore": [
-        [
-          {
-            "node": "Answer questions with a vector store",
-            "type": "ai_vectorStore",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Embeddings OpenAI": {
-      "ai_embedding": [
-        [
-          {
-            "node": "Supabase Vector Store",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Answer questions with a vector store",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -1285,7 +1330,52 @@
         ]
       ]
     },
-    "chat_human_support": {
+    "Smruti RAG Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "General Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Special Agent Executed": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Text reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Intermediate Tool Execution": {
+      "main": [
+        [
+          {
+            "node": "If Special Agent Executed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Escalation Agent": {
       "ai_tool": [
         [
           {
@@ -1301,7 +1391,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "ae93c18f-f055-44c4-b0fe-c7f5b7c85c4b",
+  "versionId": "7ec31b77-3320-499a-bdda-e0f936b5f88d",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
