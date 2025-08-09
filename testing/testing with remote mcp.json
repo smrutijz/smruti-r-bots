@@ -1,0 +1,406 @@
+{
+  "name": "testing with remote mcp",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        176,
+        384
+      ],
+      "id": "06ebd3d9-722b-4963-9030-ee9bd3e78b68",
+      "name": "When chat message received",
+      "webhookId": "0f684a9f-e6e5-43b5-85d9-e15acee9d801"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={\n\"text\":{{ $json.text }},\n\"user_prompt\":{{ $json.user_prompt }},\n\"sys_prompt\":{{ $json.sys_prompt }},\n\"extract_description\":{{ $json.extract_description }},\n\"extract_type\": {{ $json.extract_type }}\n}",
+        "options": {
+          "systemMessage": "You are a helpful assistant to call for structured output",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        816,
+        -128
+      ],
+      "id": "fd8f661d-9736-4d34-965a-244a5b8ce64e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        80
+      ],
+      "id": "c24957a3-4d3c-4df6-9470-212543686715",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "pr0KoGSOjfu5MKer",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "https://mcp-structured-output-gxeyaucgcfe3a0gf.southeastasia-01.azurewebsites.net/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        1104,
+        64
+      ],
+      "id": "fc5477b8-4be4-46a2-9955-28d59e13cef8",
+      "name": "MCP Client",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "30bcecf1-0951-4a1b-a8ae-fc63271c041d",
+              "name": "text",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "7fab0b88-c269-48c7-a158-27c036f7c3e2",
+              "name": "user_prompt",
+              "value": "Extract the email address",
+              "type": "string"
+            },
+            {
+              "id": "6b3cc55e-39a4-45a1-a27e-89a20026843a",
+              "name": "sys_prompt",
+              "value": "You are a data extraction assistant.\\nYour only task is to find valid email addresses in the user‑provided text. Do not add any other commentary.",
+              "type": "string"
+            },
+            {
+              "id": "7ee01c28-44c5-48ef-b76b-ff82600bc438",
+              "name": "extract_description",
+              "value": "Email address",
+              "type": "string"
+            },
+            {
+              "id": "a561ce78-44cd-4bde-ba75-6c4c3b57b63a",
+              "name": "extract_type",
+              "value": "str",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        -128
+      ],
+      "id": "06701395-bb16-44d2-ad09-6acbcf95e012",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        944,
+        80
+      ],
+      "id": "74b2d13c-0d18-475d-b633-3247ee675dea",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={\n\"text\":{{ $json.text }},\n\"user_prompt\":{{ $json.user_prompt }},\n\"sys_prompt\":{{ $json.sys_prompt }},\n\"extract_description\":{{ $json.extract_description }},\n\"extract_type\": {{ $json.extract_type }}\n}",
+        "options": {
+          "systemMessage": "You are a helpful assistant to call for structured output",
+          "returnIntermediateSteps": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        608,
+        384
+      ],
+      "id": "324b7196-93ad-48d8-ab61-064ea779d112",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "gpt-3.5-turbo"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        512,
+        576
+      ],
+      "id": "38e4a162-f9f1-4168-aad2-e5fb848a3392",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "pr0KoGSOjfu5MKer",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "30bcecf1-0951-4a1b-a8ae-fc63271c041d",
+              "name": "text",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "7fab0b88-c269-48c7-a158-27c036f7c3e2",
+              "name": "user_prompt",
+              "value": "Extract the email address",
+              "type": "string"
+            },
+            {
+              "id": "6b3cc55e-39a4-45a1-a27e-89a20026843a",
+              "name": "sys_prompt",
+              "value": "You are a data extraction assistant.\\nYour only task is to find valid email addresses in the user‑provided text. Do not add any other commentary.",
+              "type": "string"
+            },
+            {
+              "id": "7ee01c28-44c5-48ef-b76b-ff82600bc438",
+              "name": "extract_description",
+              "value": "Email address",
+              "type": "string"
+            },
+            {
+              "id": "a561ce78-44cd-4bde-ba75-6c4c3b57b63a",
+              "name": "extract_type",
+              "value": "str",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        384
+      ],
+      "id": "ace33ed6-b3b0-4f6f-95f3-7bdcb5f69ffe",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        592
+      ],
+      "id": "5a1c890c-3826-4b2e-b945-2ddf98459d26",
+      "name": "Simple Memory1"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use the MCP client to discover and list all available tools. The client should identify every relevant extraction tool exposed by the MCP server and return their names, descriptions, and parameters so they can be invoked for email extraction tasks.",
+        "connectionType": "sse"
+      },
+      "type": "n8n-nodes-mcp.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        848,
+        592
+      ],
+      "id": "b388774e-61c1-49ab-af7f-8daddf06d083",
+      "name": "MCP Client1",
+      "credentials": {
+        "mcpClientSseApi": {
+          "id": "JdpKqeTEg0NViJ1L",
+          "name": "MCP Client (SSE) - Smruti - Structured Output"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Use the MCP client to invoke the structured extraction tool on the MCP server to produce JSON-formatted output containing email addresses from the provided text. Pass the input text, a user prompt such as “Extract the email address,” and a system prompt with extraction context. The tool should return a structured JSON object with the extracted email(s) or None if no valid email is found.",
+        "connectionType": "sse",
+        "operation": "executeTool",
+        "toolName": "={{ $fromAI('tool', 'tool') }}",
+        "toolParameters": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Tool_Parameters', ``, 'json') }}"
+      },
+      "type": "n8n-nodes-mcp.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        992,
+        592
+      ],
+      "id": "020e8997-8201-4556-a5da-1aaa97f937c0",
+      "name": "MCP Client2",
+      "credentials": {
+        "mcpClientSseApi": {
+          "id": "JdpKqeTEg0NViJ1L",
+          "name": "MCP Client (SSE) - Smruti - Structured Output"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e7db6110-64e3-46fd-b403-21470b2b652e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
+  },
+  "id": "VBaIKoP1dYWEQKVs",
+  "tags": []
+}
