@@ -12,8 +12,8 @@
       "name": "Telegram Trigger",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        -2864,
-        1488
+        -2976,
+        768
       ],
       "webhookId": "51942fbb-ca0e-4ec4-9423-5fcc7d3c4281",
       "typeVersion": 1,
@@ -202,29 +202,6 @@
           "name": "Telegram account"
         }
       }
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "message.text",
-              "value": "={{ $('Telegram Trigger').first().json.message.text || \"\" }}"
-            }
-          ]
-        },
-        "options": {
-          "dotNotation": true
-        }
-      },
-      "id": "abdf831d-bdc7-410d-8edb-9817e34c85b8",
-      "name": "PreProcessing",
-      "type": "n8n-nodes-base.set",
-      "position": [
-        -1856,
-        608
-      ],
-      "typeVersion": 2
     },
     {
       "parameters": {
@@ -1063,270 +1040,41 @@
     },
     {
       "parameters": {
-        "rules": {
-          "values": [
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.text}}`",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    },
-                    "id": "448ba396-73c7-4551-8c9f-74463947fbb4"
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "text"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "b384dc17-7ccc-43d7-bab2-2387f69305df",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.voice.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "voice"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "3ade2c21-6b59-47bc-82c2-acd4e64372cd",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.audio.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "sticker"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "f579cf7d-ffb7-4bf1-a531-79fbb27d92e5",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.animation.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "animation"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "4bcce5ff-4bed-4868-88c1-a09fad292246",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.photo.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "photo"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "99989923-e978-459c-8fef-ba724231988b",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.location.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "location"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "94879c52-a55a-4115-909b-c0af8642817c",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.poll.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "poll"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "9a298039-e102-4586-b9dc-e3a6260a1b68",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.video.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "video"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "78b74930-1df8-4dab-a77a-33033c344562",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.document.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "document"
-            },
-            {
-              "conditions": {
-                "options": {
-                  "caseSensitive": true,
-                  "leftValue": "",
-                  "typeValidation": "strict",
-                  "version": 2
-                },
-                "conditions": [
-                  {
-                    "id": "71ab0329-de97-4b14-a275-64ff9f98ff3f",
-                    "leftValue": "={{ $('Telegram Trigger').first().json.message.video_note.toString() }}",
-                    "rightValue": "",
-                    "operator": {
-                      "type": "string",
-                      "operation": "exists",
-                      "singleValue": true
-                    }
-                  }
-                ],
-                "combinator": "and"
-              },
-              "renameOutput": true,
-              "outputKey": "video_note"
-            }
-          ]
-        },
-        "options": {}
+        "mode": "expression",
+        "numberOutputs": 11,
+        "output": "={{ \n  $json[\"message\"][\"text\"]   ? 0 :\n  $json[\"message\"][\"voice\"]  ? 1 :\n  $json[\"message\"][\"video_note\"] ? 2 :\n  $json[\"message\"][\"sticker\"] ? 3 :\n  $json[\"message\"][\"animation\"] ? 4 :\n  $json[\"message\"][\"photo\"]  ? 5 :\n  $json[\"message\"][\"video\"]  ? 6 :\n  $json[\"message\"][\"document\"] ? 7 :\n  $json[\"message\"][\"location\"] ? 8 :\n  $json[\"message\"][\"poll\"]   ? 9 :\n  10 // default/fallback index\n}}"
       },
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -2640,
-        1360
+        -2736,
+        624
       ],
-      "id": "f41b1659-648b-4607-9391-9b68be97b54d",
-      "name": "Message Type Switch"
+      "id": "19316ec8-459e-4912-a223-bcd4debee20d",
+      "name": "Telegram Message Type Switch"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message.text",
+              "value": "={{ $('Audio - Transcribe').first().json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "5866981a-91e3-4b36-ad2b-c557b396a136",
+      "name": "Audio - PreProcessing",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1840,
+        288
+      ],
+      "typeVersion": 2
     },
     {
       "parameters": {
@@ -1337,11 +1085,11 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        -2112,
-        448
+        -2000,
+        272
       ],
       "id": "72f59c56-f1b3-4e95-ac2e-7db131d9f60a",
-      "name": "Transcribe a recording",
+      "name": "Audio - Transcribe",
       "credentials": {
         "openAiApi": {
           "id": "pr0KoGSOjfu5MKer",
@@ -1358,11 +1106,11 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -2320,
-        448
+        -2192,
+        464
       ],
       "id": "d034086f-2651-49ff-a96b-e05a7fa0417c",
-      "name": "Get a file",
+      "name": "Audio - Get a file",
       "webhookId": "305b4700-6981-4762-b3f4-fc3885b5d156",
       "credentials": {
         "telegramApi": {
@@ -1377,7 +1125,7 @@
           "string": [
             {
               "name": "message.text",
-              "value": "={{ $('Transcribe a recording').first().json.text }}"
+              "value": "={{ $('Telegram Trigger').first().json.message.text || \"\" }}"
             }
           ]
         },
@@ -1385,14 +1133,176 @@
           "dotNotation": true
         }
       },
-      "id": "5866981a-91e3-4b36-ad2b-c557b396a136",
-      "name": "PreProcessing Audio to Text Message",
+      "id": "abdf831d-bdc7-410d-8edb-9817e34c85b8",
+      "name": "Text - PreProcessing",
       "type": "n8n-nodes-base.set",
       "position": [
-        -1856,
+        -1840,
+        128
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.video_note.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -2208,
+        608
+      ],
+      "id": "e1e7d84e-6b56-4cd0-bda5-72f920e07003",
+      "name": "VideoNote - Get a file",
+      "webhookId": "305b4700-6981-4762-b3f4-fc3885b5d156",
+      "credentials": {
+        "telegramApi": {
+          "id": "VrUN2BLxI7XzhxlX",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -2000,
+        448
+      ],
+      "id": "fcbc9617-bace-4509-8db9-d54a6a677ba3",
+      "name": "VideoNote - Transcribe",
+      "credentials": {
+        "openAiApi": {
+          "id": "pr0KoGSOjfu5MKer",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message.text",
+              "value": "=Now that you’ve seen {{ $json.message.animation.file_name }}—that was a rollercoaster of emotions! 😂 Now, hit me with a sticker, animation, or emoji that matches the vibe. Let's keep this party going! 🎉"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "5da0c9f6-17c1-47d4-bcaa-189a2d561f91",
+      "name": "Animation - PreProcessing",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1840,
+        784
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message.text",
+              "value": "={{ $('VideoNote - Transcribe').first().json.text }}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "6d159dd1-612e-49e9-a8c7-530a9f648cb8",
+      "name": "VideoNote - PreProcessing",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1840,
         448
       ],
       "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message.text",
+              "value": "=Now that you’ve seen {{ $json.message.sticker.emoji }}—that was a rollercoaster of emotions! 😂 Now, hit me with a sticker, animation, or emoji that matches the vibe. Let's keep this party going! 🎉"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "8f3dd2b5-0c26-484b-8117-bef744c2f87b",
+      "name": "Sticker - PreProcessing",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1840,
+        624
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "message.text",
+              "value": "=📍 Address: {{$json[\"results\"][0][\"formatted_address\"]}}\n📍 Coordinates: Latitude: {{ $(\"Telegram Trigger\").first().json[\"message\"][\"location\"][\"latitude\"]}}, Longitude: {{$(\"Telegram Trigger\").first().json[\"message\"][\"location\"][\"longitude\"]}}"
+            }
+          ]
+        },
+        "options": {
+          "dotNotation": true
+        }
+      },
+      "id": "e283f200-5b8a-4cc2-920c-07ef636b0f6d",
+      "name": "Animation - PreProcessing1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1840,
+        1248
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/geocode/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "latlng",
+              "value": "={{$json[\"message\"][\"location\"][\"latitude\"]}},{{$json[\"message\"][\"location\"][\"longitude\"]}}"
+            },
+            {
+              "name": "key",
+              "value": "AIzaSyDcDoCIu0YBNnq3Hwo0AmJ728wTruCnTB4"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -2032,
+        1264
+      ],
+      "id": "1cb4666e-1c9a-40dc-9dbb-c4261bfa37dc",
+      "name": "Reverse Geo Code - Google API"
     }
   ],
   "pinData": {},
@@ -1424,22 +1334,11 @@
         ]
       ]
     },
-    "PreProcessing": {
-      "main": [
-        [
-          {
-            "node": "Settings",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Telegram Trigger": {
       "main": [
         [
           {
-            "node": "Message Type Switch",
+            "node": "Telegram Message Type Switch",
             "type": "main",
             "index": 0
           }
@@ -1719,46 +1618,39 @@
         ]
       ]
     },
-    "Message Type Switch": {
+    "Telegram Message Type Switch": {
       "main": [
         [
           {
-            "node": "PreProcessing",
+            "node": "Text - PreProcessing",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Get a file",
+            "node": "Audio - Get a file",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Send error message",
+            "node": "VideoNote - Get a file",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Send error message",
+            "node": "Sticker - PreProcessing",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Send error message",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Send error message",
+            "node": "Animation - PreProcessing",
             "type": "main",
             "index": 0
           }
@@ -1786,40 +1678,130 @@
         ],
         [
           {
-            "node": "Send error message",
+            "node": "Reverse Geo Code - Google API",
             "type": "main",
             "index": 0
           }
-        ]
+        ],
+        [],
+        []
       ]
     },
-    "Get a file": {
-      "main": [
-        [
-          {
-            "node": "Transcribe a recording",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Transcribe a recording": {
-      "main": [
-        [
-          {
-            "node": "PreProcessing Audio to Text Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "PreProcessing Audio to Text Message": {
+    "Audio - PreProcessing": {
       "main": [
         [
           {
             "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Audio - Transcribe": {
+      "main": [
+        [
+          {
+            "node": "Audio - PreProcessing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Audio - Get a file": {
+      "main": [
+        [
+          {
+            "node": "Audio - Transcribe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text - PreProcessing": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideoNote - Get a file": {
+      "main": [
+        [
+          {
+            "node": "VideoNote - Transcribe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideoNote - Transcribe": {
+      "main": [
+        [
+          {
+            "node": "VideoNote - PreProcessing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Animation - PreProcessing": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideoNote - PreProcessing": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sticker - PreProcessing": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Animation - PreProcessing1": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reverse Geo Code - Google API": {
+      "main": [
+        [
+          {
+            "node": "Animation - PreProcessing1",
             "type": "main",
             "index": 0
           }
@@ -1831,7 +1813,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "c29c07a3-3786-4630-878a-959783d37dfe",
+  "versionId": "63d5b30c-7a12-41e8-b0f4-770750bac423",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "59c2324f4ea2ad5f70c34fef203bded6065d1b542555d863f4aed55ffc23ff64"
